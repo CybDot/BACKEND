@@ -1,0 +1,8 @@
+from rest_framework.permissions import IsAuthenticated
+
+class ProtectedView(APIView):
+    permission_classes = [IsAuthenticated]  # Only logged-in users can access
+
+    def get(self, request):
+        user = request.user  # Accesses the authenticated user's info
+        return Response({"message": f"Welcome, {user.username}!"})

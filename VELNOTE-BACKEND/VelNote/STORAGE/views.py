@@ -8,13 +8,14 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 def index(request):
     return HttpResponse("hello world")
 
 
 class NoteAPI(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]  
     
     def put(self, request, pk=None):

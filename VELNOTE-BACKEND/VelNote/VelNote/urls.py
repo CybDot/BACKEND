@@ -20,10 +20,19 @@ from . import settings
 from django.conf.urls.static import static
 from rest_framework.authtoken import views
 from UserLogin import views as V
+from Home import views as H
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('STORAGE.urls')),
-    path('api-token-auth/', views.obtain_auth_token),
-    path('register/user/',V.Register.as_view(),name= 'register'),
-
+#    path('api-token-auth/', views.obtain_auth_token),
+    path('api/registration/',V.RegisterView.as_view(),name= 'register'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/login/',V.UserLoginView.as_view(),name= 'login'),
+    path('api/home/',H.HomeView.as_view(),name= 'home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
